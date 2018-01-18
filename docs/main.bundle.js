@@ -85,12 +85,16 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__editor_editor_component__ = __webpack_require__("../../../../../src/app/editor/editor.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__sidebar_sidebar_component__ = __webpack_require__("../../../../../src/app/sidebar/sidebar.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__vocab_predictor_audiences_service__ = __webpack_require__("../../../../../src/app/vocab-predictor-audiences.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__vocab_predictor_retriever_service__ = __webpack_require__("../../../../../src/app/vocab-predictor-retriever.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -109,9 +113,12 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_6__sidebar_sidebar_component__["a" /* SidebarComponent */]
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */], __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClientModule */]
+                __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */], __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */]
             ],
-            providers: [],
+            providers: [
+                __WEBPACK_IMPORTED_MODULE_7__vocab_predictor_audiences_service__["a" /* VocabPredictorAudiencesService */],
+                __WEBPACK_IMPORTED_MODULE_8__vocab_predictor_retriever_service__["a" /* VocabPredictorRetrieverService */]
+            ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
         })
     ], AppModule);
@@ -204,7 +211,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/sidebar/sidebar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  Audience<br/>\n  <select [(ngModel)]=\"selectedProgramme\" (ngModelChange)=\"onChange($event)\" >\n      <option *ngFor=\"let c of programmes\" [ngValue]=\"c\"> {{c.name}} </option>\n    </select>\n    <br/><br/>\n    Suggestion:\n    <div>If you were to add this:</div>\n    <div>\n      <ul>\n          <li *ngFor=\"let term of terms\">{{term.value}}</li>\n      </ul>\n    </div>\n"
+module.exports = "<p>\n  Audience<br/>\n  <select [(ngModel)]=\"selectedProgramme\" (ngModelChange)=\"onChange($event)\" >\n      <option *ngFor=\"let c of programmes\" [ngValue]=\"c\"> {{c}} </option>\n    </select>\n    <br/><br/>\n    Suggestion:\n    <div>If you were to add this:</div>\n    <div>\n      <ul>\n          <li *ngFor=\"let term of terms\">{{term.value}}</li>\n      </ul>\n    </div>\n"
 
 /***/ }),
 
@@ -214,6 +221,8 @@ module.exports = "<p>\n  Audience<br/>\n  <select [(ngModel)]=\"selectedProgramm
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SidebarComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__vocab_predictor_audiences_service__ = __webpack_require__("../../../../../src/app/vocab-predictor-audiences.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__vocab_predictor_retriever_service__ = __webpack_require__("../../../../../src/app/vocab-predictor-retriever.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -224,16 +233,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var SidebarComponent = (function () {
-    function SidebarComponent() {
-        this.programmes = [{ 'name': 'Eastenders' }, { 'name': 'Dr Who' }, { 'name': 'Panorama' }];
+    function SidebarComponent(audiencesService, termsService) {
+        this.audiencesService = audiencesService;
+        this.termsService = termsService;
+        this.programmes = [];
         this.selectedProgramme = this.programmes[1];
-        this.terms = [{ 'value': 'rowlock' }, { 'value': 'bowsprit' }, { 'value': 'mast' }];
+        this.terms = [];
     }
     SidebarComponent.prototype.ngOnInit = function () {
+        this.getAudiences();
+        this.getTerms();
     };
     SidebarComponent.prototype.onChange = function (programme) {
-        alert(programme.name);
+        this.getTerms();
+    };
+    SidebarComponent.prototype.getAudiences = function () {
+        var _this = this;
+        this.audiencesService.getAudiences()
+            .subscribe(function (p) { return _this.programmes = p; });
+    };
+    SidebarComponent.prototype.getTerms = function () {
+        var _this = this;
+        this.termsService.getTerms()
+            .subscribe(function (t) { return _this.terms = t.terms; });
     };
     SidebarComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
@@ -241,9 +266,88 @@ var SidebarComponent = (function () {
             template: __webpack_require__("../../../../../src/app/sidebar/sidebar.component.html"),
             styles: [__webpack_require__("../../../../../src/app/sidebar/sidebar.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__vocab_predictor_audiences_service__["a" /* VocabPredictorAudiencesService */],
+            __WEBPACK_IMPORTED_MODULE_2__vocab_predictor_retriever_service__["a" /* VocabPredictorRetrieverService */]])
     ], SidebarComponent);
     return SidebarComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/vocab-predictor-audiences.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return VocabPredictorAudiencesService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__ = __webpack_require__("../../../../rxjs/_esm5/observable/of.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var VocabPredictorAudiencesService = (function () {
+    function VocabPredictorAudiencesService() {
+    }
+    VocabPredictorAudiencesService.prototype.getAudiences = function () {
+        return Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__["a" /* of */])(['Eastenders', 'Dr Who', 'Panorama']);
+    };
+    VocabPredictorAudiencesService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* Injectable */])(),
+        __metadata("design:paramtypes", [])
+    ], VocabPredictorAudiencesService);
+    return VocabPredictorAudiencesService;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/vocab-predictor-retriever.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return VocabPredictorRetrieverService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("../../../common/esm5/http.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var VocabPredictorRetrieverService = (function () {
+    function VocabPredictorRetrieverService(http) {
+        this.http = http;
+        this.termUrl = 'https://qgea6apuw4.execute-api.eu-west-1.amazonaws.com/dev/predictions';
+        this.TERMS = [
+            { 'value': 'rowlock', 'frequency': 0 },
+            { 'value': 'bowsprit', 'frequency': 0 },
+            { 'value': 'mast', 'frequency': 0 },
+            { 'value': 'bumpkin', 'frequency': 0 }
+        ];
+    }
+    VocabPredictorRetrieverService.prototype.getTerms = function () {
+        return this.http.get(this.termUrl);
+    };
+    VocabPredictorRetrieverService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]])
+    ], VocabPredictorRetrieverService);
+    return VocabPredictorRetrieverService;
 }());
 
 
