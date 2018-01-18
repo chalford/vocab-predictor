@@ -1,0 +1,13 @@
+<p>
+  Audience<br/>
+  <select [(ngModel)]="selectedProgramme" (ngModelChange)="onChange($event)" >
+      <option *ngFor="let c of programmes" [ngValue]="c"> {{c}} </option>
+    </select>
+    <br/><br/>
+    Suggestion:
+    <div>If you were to add this:</div>
+    <div>
+      <ul>
+          <li *ngFor="let term of terms">{{term.value}}</li>
+      </ul>
+    </div>
