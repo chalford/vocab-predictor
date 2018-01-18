@@ -38,7 +38,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    Welcome to {{ title }}!\n  </h1>\n  <img width=\"300\" alt=\"Angular Logo\" src=\"https://www.logodesignlove.com/images/evolution/bbc-logo-design.gif\"/>\n</div>\n<div class=\"row\">\n  <app-editor class=\"column\"></app-editor>\n  <app-sidebar class=\"column\"></app-sidebar>\n</div>\n\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    Welcome to {{ title }}!\n  </h1>\n  <img width=\"300\" alt=\"Angular Logo\" src=\"https://www.logodesignlove.com/images/evolution/bbc-logo-design.gif\"/>\n</div>\n<div class=\"row\">\n  <app-editor class=\"column\" (textUpdated)=\"sb.suggest($event)\" ></app-editor>\n  <app-sidebar #sb class=\"column\"></app-sidebar>\n</div>\n\n"
 
 /***/ }),
 
@@ -150,7 +150,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/editor/editor.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  Headline<br/>\n  <input (keyup)=\"onKey($event)\">\n  <br/>\n  Article<br/>\n  <textarea></textarea>\n</p>\n"
+module.exports = "<p>\n  Headline<br/>\n  <input (keyup)=\"onKey($event)\">\n  <br/>\n  Article<br/>\n  <textarea ref-textarea [(ngModel)]='text' rows='30' cols='50' ></textarea>\n  <br/>\n  <button (click)=\"suggest(textarea.value)\">Make Suggestions</button>\n</p>\n"
 
 /***/ }),
 
@@ -172,9 +172,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var EditorComponent = (function () {
     function EditorComponent() {
+        this.textUpdated = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* EventEmitter */]();
+        this.text = 'hello hackathon';
     }
     EditorComponent.prototype.ngOnInit = function () {
     };
+    EditorComponent.prototype.suggest = function (text) {
+        this.textUpdated.emit(text);
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* Output */])(),
+        __metadata("design:type", Object)
+    ], EditorComponent.prototype, "textUpdated", void 0);
     EditorComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'app-editor',
@@ -240,25 +249,35 @@ var SidebarComponent = (function () {
         this.audiencesService = audiencesService;
         this.termsService = termsService;
         this.programmes = [];
-        this.selectedProgramme = this.programmes[1];
+        this.selectedProgramme = '';
         this.terms = [];
+        this.text = '';
     }
     SidebarComponent.prototype.ngOnInit = function () {
         this.getAudiences();
-        this.getTerms();
+        this.getTerms(this.selectedProgramme, this.text);
     };
     SidebarComponent.prototype.onChange = function (programme) {
-        this.getTerms();
+        this.selectedProgramme = programme;
+        this.getTerms(programme, this.text);
     };
     SidebarComponent.prototype.getAudiences = function () {
         var _this = this;
         this.audiencesService.getAudiences()
-            .subscribe(function (p) { return _this.programmes = p; });
+            .subscribe(function (p) {
+            _this.programmes = p;
+            _this.selectedProgramme = _this.programmes[1];
+        });
     };
-    SidebarComponent.prototype.getTerms = function () {
+    SidebarComponent.prototype.getTerms = function (programme, text) {
         var _this = this;
-        this.termsService.getTerms()
-            .subscribe(function (t) { return _this.terms = t.terms; });
+        this.termsService.getTerms(programme, text)
+            .subscribe(function (t) {
+            _this.terms = t.terms;
+        });
+    };
+    SidebarComponent.prototype.suggest = function (text) {
+        this.getTerms(this.selectedProgramme, text);
     };
     SidebarComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
@@ -298,7 +317,7 @@ var VocabPredictorAudiencesService = (function () {
     function VocabPredictorAudiencesService() {
     }
     VocabPredictorAudiencesService.prototype.getAudiences = function () {
-        return Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__["a" /* of */])(['Eastenders', 'Dr Who', 'Panorama']);
+        return Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__["a" /* of */])(['Eastenders', 'colours']);
     };
     VocabPredictorAudiencesService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* Injectable */])(),
@@ -333,15 +352,10 @@ var VocabPredictorRetrieverService = (function () {
     function VocabPredictorRetrieverService(http) {
         this.http = http;
         this.termUrl = 'https://qgea6apuw4.execute-api.eu-west-1.amazonaws.com/dev/predictions';
-        this.TERMS = [
-            { 'value': 'rowlock', 'frequency': 0 },
-            { 'value': 'bowsprit', 'frequency': 0 },
-            { 'value': 'mast', 'frequency': 0 },
-            { 'value': 'bumpkin', 'frequency': 0 }
-        ];
     }
-    VocabPredictorRetrieverService.prototype.getTerms = function () {
-        return this.http.get(this.termUrl);
+    VocabPredictorRetrieverService.prototype.getTerms = function (programme, text) {
+        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpParams */]().set('audience', programme);
+        return this.http.get(this.termUrl, { params: params });
     };
     VocabPredictorRetrieverService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* Injectable */])(),
