@@ -14,13 +14,13 @@ resource "aws_api_gateway_rest_api" "VocbabPredictorAPI" {
 resource "aws_api_gateway_resource" "VocbabPredictorResource" {
   rest_api_id = "${aws_api_gateway_rest_api.VocbabPredictorAPI.id}"
   parent_id   = "${aws_api_gateway_rest_api.VocbabPredictorAPI.root_resource_id}"
-  path_part   = "/"
+  path_part   = "predictions"
 }
 
 resource "aws_api_gateway_method" "VocbabPredictorMethod" {
   rest_api_id   = "${aws_api_gateway_rest_api.VocbabPredictorAPI.id}"
   resource_id   = "${aws_api_gateway_resource.VocbabPredictorResource.id}"
-  http_method   = "POST"
+  http_method   = "GET"
   authorization = "NONE"
 }
 
@@ -55,47 +55,15 @@ resource "aws_lambda_permission" "apigw_lambda" {
 }
 
 resource "aws_lambda_function" "VocbabPredictorRetriever" {
-  filename         = "vocab-predictor-dispatcher/target/vocab-predictor-dispatcher-1.0-SNAPSHOT.jar"
+  filename         = "vocab-predictor-retriever/target/vocab-predictor-retriever-1.0-SNAPSHOT.jar"
   function_name    = "VocbabPredictorRetriever"
   role             = "${aws_iam_role.VocbabPredictorLambdaRole.arn}"
-  handler          = "uk.co.bbc.digitalecosystem.WebhookDispatcher"
+  handler          = "uk.co.bbc.team12.VocbabPredictorRetriever"
   runtime          = "java8"
-  source_code_hash = "${base64sha256(file("vocab-predictor-dispatcher/target/vocab-predictor-dispatcher-1.0-SNAPSHOT.jar"))}"
-  tracing_config {
-    mode = "Active"
-  }
-  memory_size      = "256"
-  timeout          = "10"
-  environment {
-    variables = {
-    }
-  }
-}
+  source_code_hash = "${base64sha256(file("vocab-predictor-retriever/target/vocab-predictor-retriever-1.0-SNAPSHOT.jar"))}"
 
-# S3
-
-resource "aws_s3_bucket" "VocbabPredictorDiagrams" {
-  bucket = "plantuml-bot-diagrams"
-  acl = "public-read"
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": [
-        "s3:GetObject"
-      ],
-      "Effect": "Allow",
-      "Resource": "arn:aws:s3:::plantuml-bot-diagrams/*",
-      "Principal": {
-        "AWS": [
-          "*"
-        ]
-      }
-    }
-  ]
-}
-POLICY
+  //memory_size      = "256"
+  //timeout          = "10"
 }
 
 # IAM

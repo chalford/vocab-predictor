@@ -1,4 +1,6 @@
 terraform.tfvars
 target
 .terraform
-
+.classpath
+.project
+.settings
