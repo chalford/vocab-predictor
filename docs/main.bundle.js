@@ -273,7 +273,7 @@ var SidebarComponent = (function () {
         var _this = this;
         this.termsService.getTerms(programme, text)
             .subscribe(function (t) {
-            _this.terms = t.terms;
+            _this.terms = t.terms.slice(0, 15);
         });
     };
     SidebarComponent.prototype.suggest = function (text) {
@@ -354,7 +354,7 @@ var VocabPredictorRetrieverService = (function () {
         this.termUrl = 'https://qgea6apuw4.execute-api.eu-west-1.amazonaws.com/dev/predictions';
     }
     VocabPredictorRetrieverService.prototype.getTerms = function (programme, text) {
-        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpParams */]().set('audience', programme);
+        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpParams */]().set('audience', programme).set('text', text);
         return this.http.get(this.termUrl, { params: params });
     };
     VocabPredictorRetrieverService = __decorate([
