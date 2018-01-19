@@ -3,5 +3,7 @@
   <input (keyup)="onKey($event)">
   <br/>
   Article<br/>
-  <textarea></textarea>
+  <textarea ref-textarea [(ngModel)]='text' rows='30' cols='50' ></textarea>
+  <br/>
+  <button class="btn btn-lg btn-outline-primary" (click)="suggest(textarea.value)">Make Suggestions</button>
 </p>

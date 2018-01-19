@@ -12,6 +12,7 @@ export class SidebarComponent implements OnInit {
   programmes = [];
   selectedProgramme = '';
   terms = [];
+  text = '';
 
   constructor(
     private audiencesService: VocabPredictorAudiencesService,
@@ -19,12 +20,12 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.getAudiences();
-    this.getTerms(this.selectedProgramme);
+    this.getTerms(this.selectedProgramme, this.text);
   }
 
   onChange(programme) {
     this.selectedProgramme = programme;
-    this.getTerms(programme);
+    this.getTerms(programme, this.text);
   }
 
   getAudiences(): void {
@@ -35,9 +36,16 @@ export class SidebarComponent implements OnInit {
       });
   }
 
-  getTerms(programme): void {
-    this.termsService.getTerms(programme)
-    .subscribe(t => this.terms = t.terms);
+  getTerms(programme, text): void {
+    this.terms = [];
+    this.termsService.getTerms(programme, text)
+    .subscribe(t => {
+        this.terms = t.terms.slice(0, 15);
+    });
+  }
+
+  suggest(text): void {
+    this.getTerms(this.selectedProgramme, text);
   }
 
 }
