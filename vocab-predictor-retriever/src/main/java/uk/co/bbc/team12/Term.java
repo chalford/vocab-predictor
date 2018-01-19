@@ -26,6 +26,8 @@ public class Term {
 		this.frequency = frequency;
 	}
 	
-	
+	public String toString() {
+		return "Value: " + value + " Freq: " + frequency;
+	}
 
 }

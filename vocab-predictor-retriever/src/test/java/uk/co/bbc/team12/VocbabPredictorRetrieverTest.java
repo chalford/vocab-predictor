@@ -17,7 +17,7 @@ public class VocbabPredictorRetrieverTest {
 	public void testHandleRequest() {
 		Map<String, Object> eventMap = new HashMap<String, Object>();
 		Map<String, Object> queryParams = new HashMap<String, Object>();
-		queryParams.put("audience", "eastenders");
+		queryParams.put("audience", "colours");
 		eventMap.put("queryStringParameters", queryParams);
 		
 		APIGatewayResponse response = retriever.handleRequest(eventMap, null);

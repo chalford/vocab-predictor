@@ -3,9 +3,11 @@ package uk.co.bbc.team12;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
 
@@ -21,6 +23,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ValueNode;
+
+import uk.co.bbc.team12.analyser.comments.Result;
+import uk.co.bbc.team12.analyser.comments.Words;
 
 
 /**
@@ -83,26 +88,25 @@ public class VocbabPredictorRetriever implements RequestHandler<Map<String, Obje
 		segment = (segment != null) ? segment : "";
 		List<Term> terms = new ArrayList<Term>();
 		switch(segment) {
-			case "eastenders":
-				S3Object segementData = s3Client.getObject("aggregated-suggestions", segment + "_word_frequency.json");
+			case "Eastenders":
+				S3Object segementData = s3Client.getObject("aggregated-suggestions", "eastenders" + "_word_frequency.json");
 				if(logger != null) {
 					logger.log(segementData.toString());
 				}
 				InputStream segmentIS = segementData.getObjectContent();
 				try {
 					String theString = IOUtils.toString(segmentIS, "UTF-8");
-					System.out.println(theString);
+					Words words = Words.fromString(theString);
+					List<Result> wordResult = words.getWords();
+					List<Result> sorted = wordResult.stream().sorted(Comparator.comparingInt(Result::getOccurrences).reversed()).collect(Collectors.toList());
+					for(Result res : sorted) {
+						terms.add(new Term(res.getWord(), res.getOccurrences()));
+					}
+					System.out.println(terms);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} 
-				
-//				try {
-//					mapper.readValue(segmentIS, Object.class);
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
 				break;
 			case "colours":
 				terms.add(new Term("green", 5035));
