@@ -15,6 +15,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CommentsFile implements Analysable {
@@ -33,19 +34,15 @@ public class CommentsFile implements Analysable {
             File file = new File(url.toURI());
 
             try (Stream<String> stream = Files.lines(file.toPath())) {
-                String comments = stream
-                        .map(line -> {
-                                try {
-                                    return CSVFormat.EXCEL.withHeader("date", "comment", "respid", "progtitle", "gender", "age", "ai_score").parse(new StringReader(line)).getRecords().get(0);
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            })
-                        .filter(csvRecord -> Integer.parseInt(csvRecord.get("ai_score")) > 5)
-                        .map(csvRecord -> csvRecord.get("comment"))
-                        .reduce((comment1, comment2) -> comment1 +". "+ comment2).get();
+                List<String> comments = getCommentsAboveScore(stream, 5);
+                
+                runTfldf(comments);
+                
+                String commentsString = comments.stream().reduce((comment1, comment2) -> {
+                    		return comment1 += " " + comment2;
+                }).get();
 
-                String[] parts =  {comments.substring(0, comments.length()/2),comments.substring((comments.length()/2)+1)};
+                String[] parts =  {commentsString.substring(0, commentsString.length()/2),commentsString.substring((commentsString.length()/2)+1)};
                 for (String part : parts) {
                     results = ResultsGenerator.populateResults(part, results);
                 }
@@ -53,4 +50,31 @@ public class CommentsFile implements Analysable {
         }
         return results;
     }
+
+	private void runTfldf(List<String> comments) {
+		List<Comment> commentObjects = comments.stream().map(x -> new Comment(x)).collect(Collectors.toList());
+		
+		for(Comment comment:commentObjects) {
+			for(String term: comment.getTerms()) {
+				if(comment.tfIdf(commentObjects, term) < 0.5) {
+					results.addToBlackList(term);
+				}
+			}
+		}
+	}
+
+	private List<String> getCommentsAboveScore(Stream<String> stream, int score) {
+		List<String> comments = stream
+		        .map(line -> {
+		                try {
+		                    return CSVFormat.EXCEL.withHeader("date", "comment", "respid", "progtitle", "gender", "age", "ai_score").parse(new StringReader(line)).getRecords().get(0);
+		                } catch (IOException e) {
+		                    throw new RuntimeException(e);
+		                }
+		            })
+		        .filter(csvRecord -> Integer.parseInt(csvRecord.get("ai_score")) > score)
+		        .map(csvRecord -> csvRecord.get("comment"))
+		        .collect(Collectors.toList());
+		return comments;
+	}
 }

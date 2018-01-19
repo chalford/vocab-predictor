@@ -27,6 +27,10 @@ public class Results {
             results.put(word, new Result(word));
         }
     }
+    
+    public void addToBlackList(String word) {
+    	blackList.add(word);
+    }
 
     public Collection<Result> getAllResults() {
         return results.values();

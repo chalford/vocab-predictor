@@ -36,6 +36,10 @@ public class Words {
         List<String> wordsToOmit = resultsToOmit.getAllResults().stream().map(Result::getWord).collect(toList());
         return results.values().stream().filter(x -> !wordsToOmit.contains(x.getWord())).collect(toList());
     }
+    
+    public void addToBlackList(String word) {
+    	blackList.add(word);
+    }
 
     public static Words fromString(String s) {
         Gson gson = new Gson();

@@ -62,8 +62,8 @@ resource "aws_lambda_function" "VocbabPredictorRetriever" {
   runtime          = "java8"
   source_code_hash = "${base64sha256(file("vocab-predictor-retriever/target/vocab-predictor-retriever-1.0-SNAPSHOT.jar"))}"
 
-  //memory_size      = "256"
-  //timeout          = "10"
+  memory_size      = "256"
+  timeout          = "20"
 }
 
 # IAM
