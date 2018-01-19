@@ -106,7 +106,7 @@ resource "aws_iam_role_policy" "S3LambdaAccessPolicy" {
     {
       "Effect": "Allow",
       "Action": ["s3:ListBucket"],
-      "Resource": ["arn:aws:s3:::plantuml-bot-diagrams"]
+      "Resource": ["arn:aws:s3:::aggregated-suggestions"]
     },
     {
       "Effect": "Allow",
@@ -115,11 +115,17 @@ resource "aws_iam_role_policy" "S3LambdaAccessPolicy" {
         "s3:GetObject",
         "s3:DeleteObject"
       ],
-      "Resource": ["arn:aws:s3:::plantuml-bot-diagrams/*"]
+      "Resource": ["arn:aws:s3:::aggregated-suggestions/*"]
     }
   ]
 }
 EOF
+}
+
+resource "aws_s3_bucket" "aggregated-suggestions" {
+  bucket = "aggregated-suggestions"
+  acl    = "private"
+
 }
 
 output "dev_url" {
