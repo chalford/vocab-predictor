@@ -220,7 +220,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/sidebar/sidebar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  Audience<br/>\n  <select [(ngModel)]=\"selectedProgramme\" (ngModelChange)=\"onChange($event)\" >\n      <option *ngFor=\"let c of programmes\" [ngValue]=\"c\"> {{c}} </option>\n    </select>\n    <br/><br/>\n    Suggestion:\n    <div>If you were to add this:</div>\n    <div>\n      <ul>\n          <li *ngFor=\"let term of terms\">{{term.value}}</li>\n      </ul>\n    </div>\n"
+module.exports = "<p>\n  Audience<br/>\n  <select [(ngModel)]=\"selectedProgramme\" (ngModelChange)=\"onChange($event)\" >\n      <option *ngFor=\"let c of programmes\" [ngValue]=\"c\"> {{c}} </option>\n    </select>\n    <br/><br/>\n    Suggestion:\n    <div>If you were to add this:</div>\n    <div>\n      <ul>\n          <li *ngFor=\"let term of terms\">{{term.value}}</li>\n      </ul>\n      You might engage this audience more fully.\n    </div>\n"
 
 /***/ }),
 
@@ -271,6 +271,7 @@ var SidebarComponent = (function () {
     };
     SidebarComponent.prototype.getTerms = function (programme, text) {
         var _this = this;
+        this.terms = [];
         this.termsService.getTerms(programme, text)
             .subscribe(function (t) {
             _this.terms = t.terms.slice(0, 15);
