@@ -1,0 +1,303 @@
+{
+    "uri": "\/news\/business-42030636",
+    "uri_stem": "\/news\/business",
+    "genre_toplevel": "news",
+    "genre_secondlevel": "business",
+    "genre_thirdlevel": null,
+    "headline": "Fox shares jump on sale speculation",
+    "ldp_tags": [
+      "Media",
+      "Rupert Murdoch",
+      "New media"
+    ],
+    "mango_tags": [
+      [
+        "FOX",
+        0.6303659608,
+        0.6923076923
+      ],
+      [
+        "Sony",
+        0.6402392377,
+        0.6923076923
+      ],
+      [
+        "Shares",
+        0.6128207088,
+        0.5384615385
+      ],
+      [
+        "Shares",
+        0.5644369961,
+        0.5384615385
+      ],
+      [
+        "SportS",
+        0.5147825833,
+        0.4615384615
+      ],
+      [
+        "Internet",
+        0.6231960689,
+        0.3846153846
+      ],
+      [
+        "Television",
+        0.5772963239,
+        0.3846153846
+      ],
+      [
+        "Telecom",
+        0.5757981639,
+        0.3076923077
+      ],
+      [
+        "NBCUniversal",
+        0.7351918134,
+        0.3076923077
+      ],
+      [
+        "FOX News Channel",
+        0.5805996113,
+        0.3076923077
+      ],
+      [
+        "Local news",
+        0.577124564,
+        0.3076923077
+      ],
+      [
+        "Media industry",
+        0.5308637274,
+        0.3076923077
+      ],
+      [
+        "Wireless",
+        0.6184619573,
+        0.3076923077
+      ],
+      [
+        "Rupert Murdoch",
+        0.587672974,
+        0.3076923077
+      ],
+      [
+        "Entertainment",
+        0.5278595383,
+        0.2307692308
+      ],
+      [
+        "Merger",
+        0.5579587929,
+        0.2307692308
+      ],
+      [
+        "Movie studio",
+        0.4989649719,
+        0.2307692308
+      ],
+      [
+        "Netflix",
+        0.6556316292,
+        0.2307692308
+      ],
+      [
+        "Japanese conglomerate",
+        0.456917466,
+        0.2307692308
+      ],
+      [
+        "Internet provider",
+        0.6048862314,
+        0.2307692308
+      ],
+      [
+        "Murdoch family",
+        0.5264728258,
+        0.2307692308
+      ],
+      [
+        "Sky (UK)",
+        0.626010789,
+        0.2307692308
+      ],
+      [
+        "Film studio",
+        0.508382196,
+        0.2307692308
+      ],
+      [
+        "Takeover",
+        0.5837897774,
+        0.2307692308
+      ],
+      [
+        "National Geographic (Australia and New Zealand)",
+        0.5487330849,
+        0.2307692308
+      ],
+      [
+        "Distribution functions",
+        0.4488831289,
+        0.2307692308
+      ],
+      [
+        "Broadcaster",
+        0.5044573808,
+        0.2307692308
+      ],
+      [
+        "uk",
+        0.4591259266,
+        0.2307692308
+      ],
+      [
+        "Wall Street Journal",
+        0.5562435359,
+        0.2307692308
+      ],
+      [
+        "Consumer",
+        0.5883874444,
+        0.2307692308
+      ],
+      [
+        "Content creation",
+        0.5041910296,
+        0.2307692308
+      ],
+      [
+        "Time Warner",
+        0.6692504319,
+        0.1538461538
+      ],
+      [
+        "VeriZon",
+        0.6917203625,
+        0.1538461538
+      ],
+      [
+        "Amazon (company)",
+        0.59184401,
+        0.1538461538
+      ],
+      [
+        "Strategy",
+        0.4669043951,
+        0.1538461538
+      ],
+      [
+        "Warners",
+        0.6018592534,
+        0.1538461538
+      ],
+      [
+        "Subscriptions",
+        0.6099887477,
+        0.1538461538
+      ],
+      [
+        "Consolidation (business)",
+        0.4821943262,
+        0.1538461538
+      ],
+      [
+        "21st Century Fox",
+        0.6303000021,
+        0.1538461538
+      ],
+      [
+        "International",
+        0.4846945773,
+        0.1538461538
+      ],
+      [
+        "Star TV (Asian TV networks)",
+        0.5717500755,
+        0.1538461538
+      ],
+      [
+        "Comcast",
+        0.7588515955,
+        0.1538461538
+      ],
+      [
+        "Online video",
+        0.5644297542,
+        0.0769230769
+      ],
+      [
+        "Distribution network",
+        0.4437857828,
+        0.0769230769
+      ],
+      [
+        "Plan B",
+        0.4313618541,
+        0.0769230769
+      ],
+      [
+        "Movie",
+        0.4886687783,
+        0.0769230769
+      ],
+      [
+        "Competition (economics)",
+        0.438820241,
+        0.0
+      ],
+      [
+        "Companies",
+        0.448086459,
+        0.0
+      ],
+      [
+        "Businesses",
+        0.4536381609,
+        0.0
+      ]
+    ],
+    "starfruit_tags": [
+      [
+        [
+          "Business"
+        ],
+        "0.9814"
+      ],
+      [
+        [
+          "Companies"
+        ],
+        "0.9333"
+      ],
+      [
+        [
+          "Rupert Murdoch"
+        ],
+        "0.8723"
+      ],
+      [
+        [
+          "Media"
+        ],
+        "0.7390"
+      ],
+      [
+        [
+          "New media"
+        ],
+        "0.3069"
+      ],
+      [
+        [
+          "Sony"
+        ],
+        "0.0332"
+      ]
+    ],
+    "shortHeadline": "Fox shares jump on sale speculation",
+    "summary": "Comcast, Sony and Verizon have reportedly approached the Murdoch-controlled media and entertainment firm.",
+    "body": "Shares in 21st Century Fox have jumped amid reports that several major companies have come forward as suitors for parts of its business.The US firm's shares gained more than 6% on Friday, after several sources reported interest from Comcast, Sony and Verizon.Last week the company, which is led by the family of Rupert Murdoch, was said to have held talks with Disney.21st Century Fox has not directly addressed the speculation.The Wall Street Journal - in which the Murdoch family also has a large stake - reported that Fox is considering shedding its movie studio, cable networks and international businesses, including Europe-based broadcaster Sky.That would leave the firm more narrowly focused on sports and news.A break-up would represent a sharp shift in strategy for a family that has previously appeared intent on expansion. Last year, Fox announced a deal to take full control of Sky, in which it already has a 39% stake. But the merger has been delayed, pending approval by UK authorities.Media analyst Claire Enders, founder of Enders Analysis, said the speculation suggests that Fox is exploring other possibilities should that deal fall through.\"I think this is really Plan B,\" she said.Market upheavalVerizon is one of the largest pay-TV, internet and wireless companies in the US. Like Verizon, Comcast is a dominant cable and internet provider. Since 2011, it has also has owned the television and movie company NBCUniversal. Sony is a Japanese conglomerate that owns the film studio Sony Pictures.Fox, by contrast, is known for its flagship Fox News channel, as well as National Geographic, Asia-based Star TV, and a range of sports channels and local news stations.The reports of takeover discussions come against the backdrop of upheaval in the media industry, as viewers turn increasingly towards online video, and away from subscriptions for pay-TV.That shift was reportedly what fuelled Disney's approach; combining Disney's extensive entertainment offering with Fox's, might be a way to counter the growing threat from Amazon and Netflix. Analysts say changing consumer habits have also prompted media and entertainment executives to explore more consolidation of content creation and distribution functions. Wait and seeThere is unlikely to be any formal agreement to sell parts of 21st Century Fox before the future of a pending merger between AT&amp;T and Time Warner becomes clear, analysts said.That deal would unite Time Warner's content with AT&amp;T's massive distribution network, making it similar to a possible tie-up between Fox and a telecom giant such as Verizon or Comcast.But that deal is facing questions from US competition authorities.",
+    "lastPublished": 1510953224000,
+    "item_type": "STY"
+  }
