@@ -40,7 +40,11 @@ public class VocbabPredictorRetriever implements RequestHandler<Map<String, Obje
 	
 	public VocbabPredictorRetriever() {
 	}
-
+	
+	public void setAmazonS3(AmazonS3 s3client) {
+		this.s3Client = s3client;
+	}
+	
 	public APIGatewayResponse handleRequest(Map<String, Object> eventMap, Context context) {
 		logger = getLogger(context);
 		if(logger != null) {
@@ -90,19 +94,20 @@ public class VocbabPredictorRetriever implements RequestHandler<Map<String, Obje
 		switch(segment) {
 			case "Eastenders":
 				S3Object segementData = s3Client.getObject("aggregated-suggestions", "eastenders" + "_word_frequency.json");
-				if(logger != null) {
-					logger.log(segementData.toString());
-				}
 				InputStream segmentIS = segementData.getObjectContent();
 				try {
 					String theString = IOUtils.toString(segmentIS, "UTF-8");
 					Words words = Words.fromString(theString);
 					List<Result> wordResult = words.getWords();
-					List<Result> sorted = wordResult.stream().sorted(Comparator.comparingInt(Result::getOccurrences).reversed()).collect(Collectors.toList());
+					List<Result> sorted = wordResult.stream()
+							.filter(result -> result.getWord().length() > 3)
+							.sorted(Comparator.comparingInt(Result::getOccurrences).reversed()).collect(Collectors.toList());
 					for(Result res : sorted) {
 						terms.add(new Term(res.getWord(), res.getOccurrences()));
 					}
-					System.out.println(terms);
+					if(logger != null) {
+						logger.log(terms.toString());
+					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
