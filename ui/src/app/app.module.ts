@@ -7,6 +7,7 @@ import { EditorComponent } from './editor/editor.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { VocabPredictorAudiencesService } from './vocab-predictor-audiences.service';
 import { VocabPredictorRetrieverService } from './vocab-predictor-retriever.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { VocabPredictorRetrieverService } from './vocab-predictor-retriever.serv
     SidebarComponent
   ],
   imports: [
-    BrowserModule, FormsModule, HttpClientModule
+    BrowserModule, FormsModule, HttpClientModule, NgbModule.forRoot()
   ],
   providers: [
     VocabPredictorAudiencesService,

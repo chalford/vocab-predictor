@@ -8,7 +8,7 @@ export class VocabPredictorAudiencesService {
   constructor() { }
 
   getAudiences(): Observable<string[]> {
-    return of(['Eastenders', 'Dr Who', 'Panorama']);
+    return of(['Eastenders', 'colours']);
   }
 
 }

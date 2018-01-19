@@ -38,7 +38,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    Welcome to {{ title }}!\n  </h1>\n  <img width=\"300\" alt=\"Angular Logo\" src=\"https://www.logodesignlove.com/images/evolution/bbc-logo-design.gif\"/>\n</div>\n<div class=\"row\">\n  <app-editor class=\"column\" (textUpdated)=\"sb.suggest($event)\" ></app-editor>\n  <app-sidebar #sb class=\"column\"></app-sidebar>\n</div>\n\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    Welcome to {{ title }}!\n  </h1>\n  <img width=\"300\" alt=\"Angular Logo\" src=\"https://www.logodesignlove.com/images/evolution/bbc-logo-design.gif\"/>\n</div>\n<div class=\"container\">\n  <app-editor class=\"column\" (textUpdated)=\"sb.suggest($event)\" ></app-editor>\n  <app-sidebar #sb class=\"column\"></app-sidebar>\n</div>\n\n"
 
 /***/ }),
 
@@ -87,6 +87,7 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__sidebar_sidebar_component__ = __webpack_require__("../../../../../src/app/sidebar/sidebar.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__vocab_predictor_audiences_service__ = __webpack_require__("../../../../../src/app/vocab-predictor-audiences.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__vocab_predictor_retriever_service__ = __webpack_require__("../../../../../src/app/vocab-predictor-retriever.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -102,18 +103,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["E" /* NgModule */])({
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["G" /* NgModule */])({
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */],
                 __WEBPACK_IMPORTED_MODULE_5__editor_editor_component__["a" /* EditorComponent */],
                 __WEBPACK_IMPORTED_MODULE_6__sidebar_sidebar_component__["a" /* SidebarComponent */]
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */], __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */]
+                __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */], __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["b" /* HttpClientModule */], __WEBPACK_IMPORTED_MODULE_9__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot()
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_7__vocab_predictor_audiences_service__["a" /* VocabPredictorAudiencesService */],
@@ -150,7 +152,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/editor/editor.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  Headline<br/>\n  <input (keyup)=\"onKey($event)\">\n  <br/>\n  Article<br/>\n  <textarea ref-textarea [(ngModel)]='text' rows='30' cols='50' ></textarea>\n  <br/>\n  <button (click)=\"suggest(textarea.value)\">Make Suggestions</button>\n</p>\n"
+module.exports = "<p>\n  Headline<br/>\n  <input (keyup)=\"onKey($event)\">\n  <br/>\n  Article<br/>\n  <textarea ref-textarea [(ngModel)]='text' rows='30' cols='50' ></textarea>\n  <br/>\n  <button class=\"btn btn-lg btn-outline-primary\" (click)=\"suggest(textarea.value)\">Make Suggestions</button>\n</p>\n"
 
 /***/ }),
 
@@ -172,7 +174,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var EditorComponent = (function () {
     function EditorComponent() {
-        this.textUpdated = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* EventEmitter */]();
+        this.textUpdated = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
         this.text = 'hello hackathon';
     }
     EditorComponent.prototype.ngOnInit = function () {
@@ -181,7 +183,7 @@ var EditorComponent = (function () {
         this.textUpdated.emit(text);
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* Output */])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* Output */])(),
         __metadata("design:type", Object)
     ], EditorComponent.prototype, "textUpdated", void 0);
     EditorComponent = __decorate([
@@ -321,7 +323,7 @@ var VocabPredictorAudiencesService = (function () {
         return Object(__WEBPACK_IMPORTED_MODULE_1_rxjs_observable_of__["a" /* of */])(['Eastenders', 'colours']);
     };
     VocabPredictorAudiencesService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* Injectable */])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["y" /* Injectable */])(),
         __metadata("design:paramtypes", [])
     ], VocabPredictorAudiencesService);
     return VocabPredictorAudiencesService;
@@ -359,7 +361,7 @@ var VocabPredictorRetrieverService = (function () {
         return this.http.get(this.termUrl, { params: params });
     };
     VocabPredictorRetrieverService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* Injectable */])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["y" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]])
     ], VocabPredictorRetrieverService);
     return VocabPredictorRetrieverService;
@@ -399,7 +401,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_7" /* enableProdMode */])();
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_10" /* enableProdMode */])();
 }
 Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */])
     .catch(function (err) { return console.log(err); });

@@ -5,8 +5,8 @@
   </h1>
   <img width="300" alt="Angular Logo" src="https://www.logodesignlove.com/images/evolution/bbc-logo-design.gif"/>
 </div>
-<div class="row">
-  <app-editor class="column"></app-editor>
-  <app-sidebar class="column"></app-sidebar>
+<div class="container">
+  <app-editor class="column" (textUpdated)="sb.suggest($event)" ></app-editor>
+  <app-sidebar #sb class="column"></app-sidebar>
 </div>
 
