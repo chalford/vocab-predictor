@@ -52,15 +52,16 @@ public class CommentsFile implements Analysable {
     }
 
 	private void runTfldf(List<String> comments) {
-		List<Comment> commentObjects = comments.stream().map(x -> new Comment(x)).collect(Collectors.toList());
+		List<Comment> commentObjects = comments.stream().map(Comment::new).collect(Collectors.toList());
 		
-		for(Comment comment:commentObjects) {
+		commentObjects.stream().parallel().forEach(comment ->{
 			for(String term: comment.getTerms()) {
-				if(comment.tfIdf(commentObjects, term) < 0.5) {
-					results.addToBlackList(term);
+                double v = comment.tfIdf(commentObjects, term);
+                if(v < 0.5) {
+                    results.addToBlackList(term);
 				}
 			}
-		}
+		});
 	}
 
 	private List<String> getCommentsAboveScore(Stream<String> stream, int score) {
